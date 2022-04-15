@@ -8,10 +8,10 @@ import {
 	likePost,
 } from "../controllers/posts.js";
 
-router.post("/create", createPost);
-router.get("/get", getPosts);
+router.post("/", createPost);
+router.get("/", getPosts);
 router.patch("/update/:id", updatePost);
 router.patch("/like/:id", likePost);
-router.delete("/delete/:id", deletePost);
+router.delete("/:id", deletePost);
 
 export default router;

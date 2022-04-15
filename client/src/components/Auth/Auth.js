@@ -9,12 +9,15 @@ import {
 } from "@material-ui/core";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { GoogleLogin } from "react-google-login";
+import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import useStyles from "./styles";
 import Input from "./Input";
 import Icon from "./icon";
 const SignUp = () => {
 	const [isSignup, setIsSignup] = useState(false);
-
+	const history = useHistory();
+	const dispatch = useDispatch();
 	const classes = useStyles();
 
 	const [showPassword, setShowPassword] = useState(false);
@@ -35,15 +38,19 @@ const SignUp = () => {
 	const handleChange = () => {};
 
 	const googleSuccess = async (res) => {
-		const profileObj = res?.profileObj;
+		const result = res?.profileObj;
 		const token = res?.tokenId;
 
 		try {
-		} catch (error) {}
-		console.log(res);
+			dispatch({ type: "AUTH", data: { result, token } });
+
+			history.push("/");
+		} catch (error) {
+			console.log(error);
+		}
 	};
 	const googleFailure = () => {
-		console.log("Fail");
+		alert("Fail to login by Google");
 	};
 	return (
 		<Container component="main" maxWidth="xs">
